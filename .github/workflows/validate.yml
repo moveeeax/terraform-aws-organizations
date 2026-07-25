@@ -29,3 +29,32 @@ jobs:
         run: |
           tofu init -backend=false
           tofu validate
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: init
+        run: terraform init -backend=false
+
+      # Runs against a mocked AWS provider: no credentials and no network calls.
+      - name: test
+        run: terraform test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: terraform-linters/setup-tflint@v4
+
+      - name: tflint init
+        run: tflint --init
+
+      - name: tflint
+        run: tflint --format compact
