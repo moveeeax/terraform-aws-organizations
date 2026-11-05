@@ -9,7 +9,7 @@ of organizational units directly under the root.
 
 ```hcl
 module "organizations" {
-  source = "github.com/moveeeax/terraform-aws-organizations"
+  source = "github.com/moveeeax/terraform-aws-organizations?ref=v1.0.0" # pin to a release tag
 
   feature_set          = "ALL"
   organizational_units = ["workloads", "sandbox"]
